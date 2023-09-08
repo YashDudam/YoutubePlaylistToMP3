@@ -5,10 +5,6 @@ import os
 from pytube import Playlist
 
 def main():
-    if len(sys.argv) != 3:
-        print(f'USAGE: python3 {sys.argv[0]} <location> <playlistURL>')
-        sys.exit(1)
-
     location = sys.argv[1]
     playlistURL = sys.argv[2]
 
