@@ -13,7 +13,7 @@ def main():
         sys.exit(1)
 
     if not os.path.isdir(location):
-        print(f'ERROR: {location} is not directory')
+        print(f'ERROR: {location} is not a directory')
         sys.exit(1)
 
     playlist = Playlist(playlistURL)
