@@ -3,8 +3,15 @@
 import sys
 import os
 from pytube import Playlist
+from flask import Flask, request, render_template
 
-def main():
+app = Flask(__name__)
+
+@app.get('/')
+def index():
+    return render_template('index.html')
+
+def download():
     location = sys.argv[1]
     playlistURL = sys.argv[2]
 
@@ -28,6 +35,3 @@ def main():
         path = song.streams.get_audio_only().download(location)
         name, ext = os.path.splitext(path)
         os.rename(path, f'{name}.mp3')
-
-if __name__ == '__main__':
-    main()
