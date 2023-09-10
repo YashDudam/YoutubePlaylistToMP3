@@ -3,7 +3,8 @@
 import sys
 import os
 from pytube import Playlist
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_file
+from shutil import make_archive, move
 
 app = Flask(__name__)
 
@@ -11,27 +12,21 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.post('/download')
 def download():
-    location = sys.argv[1]
-    playlistURL = sys.argv[2]
-
-    if not os.path.exists(location):
-        print(f'ERROR: {location} could not be found')
-        sys.exit(1)
-
-    if not os.path.isdir(location):
-        print(f'ERROR: {location} is not a directory')
-        sys.exit(1)
-
+    playlistURL = request.form['text']
     playlist = Playlist(playlistURL)
 
-    if len(playlist) == 0:
-        print('ERROR: Could not find any songs in playlist.')
-        print('If there are songs in the playlist check that the URL you have entered is correct, and that the playlist is not private.')
-        sys.exit(1)
-
+    clear_data()
     for song in playlist.videos:
         print(f'Downloading {song.title}')
-        path = song.streams.get_audio_only().download(location)
-        name, ext = os.path.splitext(path)
+        path = song.streams.get_audio_only().download('data')
+        name, _ = os.path.splitext(path)
         os.rename(path, f'{name}.mp3')
+
+    archive = make_archive('music', 'zip', os.path.dirname(path))
+    move(archive, './data')
+    return send_file('./data/music.zip')
+
+def clear_data():
+    [ os.remove(os.path.join(os.path.curdir, 'data', file)) for file in os.listdir('./data') ]
