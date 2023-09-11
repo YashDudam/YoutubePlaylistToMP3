@@ -20,4 +20,5 @@ def download(url):
             print(f'Failed to download {song.title} :(')
 
     archive = make_archive('music', 'zip', os.path.dirname(path))
+    clear()
     move(archive, './data')
