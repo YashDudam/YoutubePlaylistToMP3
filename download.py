@@ -4,11 +4,12 @@ import os
 from pytube import Playlist
 from shutil import make_archive, move
 
-from data import clear
+from data import clear, mkdata
 
 def download(url):
     playlist = Playlist(url)
 
+    mkdata()
     clear()
     for song in playlist.videos:
         try:
