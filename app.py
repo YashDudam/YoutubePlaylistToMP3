@@ -11,6 +11,6 @@ def index():
 
 @app.post('/convert')
 def convert():
-    playlistURL = request.form['text']
+    playlistURL = request.data.decode()
     download(playlistURL)
     return send_file('./data/music.zip')
