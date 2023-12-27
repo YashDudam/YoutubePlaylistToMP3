@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist Converter</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlist Converter</title>
+  <link rel="stylesheet" href="/static/styles/index.css">
 </head>
 <body>
-    <p>Enter playlist URL:</p>
+  <div id="converter-container">
     <form action="/convert" method="post">
-        <input name="text" type="text">
+      <label for="playlistURL">Enter Playlist URL:</label>
+      <input id="playlistURL" name="playlistURL" type="text" placeholder="URL">
+      <button type="submit">Convert Playlist</button>
     </form>
+  </div>
 </body>
 </html>
